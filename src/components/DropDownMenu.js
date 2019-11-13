@@ -74,6 +74,10 @@ function DropDownMenu(props){
         props.onTileDeleted();
     }
 
+    function onEditTile(e){
+        props.onEditTile();
+    }
+
 
     return (
         <Dropdown isOpen={dropdownOpen} toggle={toggle}>
@@ -125,6 +129,7 @@ function DropDownMenu(props){
                 </div>  
                 <DropdownItem divider='true'/>
                  <DropdownItem onClick={onTileDeleted}> Hide tile</DropdownItem> 
+                 <DropdownItem onClick={onEditTile}> Edit tile</DropdownItem> 
                 
             </DropdownMenu>
            

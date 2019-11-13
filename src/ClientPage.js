@@ -7,16 +7,16 @@ function ClientPage (props){
     const[visibleTiles, setVisibleTiles] = useState([...props.apps]);
     const[hiddenTiles,setHiddenTiles]= useState([]);
     const[isSideOutOpen, setSideOutOpen]= useState(false);
-    const tilesGridRef = React.useRef();
-  
-   
+    const[isSideOutForEdit, setSideOutForEdit]=useState(false);
+    const[tileToEdit,setTileToEdit]=useState();
     function handleHiddenTilesClick(e){
             setSideOutOpen(!isSideOutOpen);
     }
 
     function onAddTileClickHandler(){
+        
         const element = {
-            id:visibleTiles.length+1,
+            id:visibleTiles.length + hiddenTiles.length+1,
             title:'Test title',
             description:'test description'
         };
@@ -39,12 +39,26 @@ function ClientPage (props){
         setHiddenTiles(_hiddenTile);
     }
 
+    function editTile(id){
+        setSideOutOpen(true);
+        setSideOutForEdit(true);
+        setTileToEdit(visibleTiles.find(t=>t.id===id)) ;
+        
+    }
+
+    function sideOutClose(){
+        setSideOutOpen(false);
+        setSideOutForEdit(false);
+       
+    }
+   
+
     return(
         <>
             <button onClick={handleHiddenTilesClick}> Hidden tiles</button>
             <div className="content-container" >
-                <TilesGrid ref={tilesGridRef} onTileHide={onTileHide} tiles = {visibleTiles}/>
-                <SlideOut removeFromHidden={onRemovedFromHidden} hiddenTiles={hiddenTiles} isOpen={isSideOutOpen}></SlideOut>
+                <TilesGrid editTile = {editTile} onTileHide={onTileHide} tiles = {visibleTiles}/>
+                <SlideOut tile={tileToEdit} isSideOutForEdit={isSideOutForEdit} removeFromHidden={onRemovedFromHidden} hiddenTiles={hiddenTiles} isOpen={isSideOutOpen}></SlideOut>
             </div>
             <button onClick={onAddTileClickHandler}>Add tile</button>
         </>  

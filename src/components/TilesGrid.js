@@ -1,77 +1,35 @@
-import React, {useState,useEffect,useImperativeHandle, useRef, forwardRef} from 'react';
-import Packery from 'packery';
-import Draggabilly from 'draggabilly';
-import PropTypes from 'prop-types';
+import React, {useState} from 'react';
 import Tile from './Tile';
+import GridView from './GridView';
+
+function useForceUpdate(){
+    const[value,setValue] = useState(true);
+    return ()=>setValue(!value);
+}
 
 function TilesGrid(props,ref){
 
-    const[packery,setPackery] = useState();
+    const forceUpdate = useForceUpdate();
+    const _tiles = props.tiles.map(t => <Tile key={t.id} editTile={props.editTile}   deleteTile={props.onTileHide} onSizeChanged={forceUpdate} tile={t}/>);
 
-    useEffect(()=>{
-        initPackery();
-    },[]);
-
-    useEffect(()=>{
-        debugger;
-        if(packery === undefined) return;
-        
-        var packeryItems = document.querySelectorAll('.packery-grid-item');
-        packeryItems.forEach(pi=> makeItemDraggable(pi,packery));
-        updatePackery();
-    },[props.tiles])
-
-    const initPackery= ()=>{
-        console.log('Initializing packery..');
-        const packeryOptions = {
-            percentPosition: true,
-            itemSelector:'.packery-grid-item',
-            columnWidth:'.grid-sizer',
-            rowWidth:'.grid-sizer',
-            gutter:'.gutter-sizer'
-        }
-         const _packery = new Packery('.packery-grid',packeryOptions);
-         var packeryItems = document.querySelectorAll('.packery-grid-item');
-         packeryItems.forEach(pi=> makeItemDraggable(pi,_packery));
-         setPackery(_packery);
-     }
-
-    //  function addTile(tile){
-    //      setTiles([...tiles,tile]);
-    //      const tileElement = <Tile tile={tile}/>
-    //      packery.appended(tileElement);
-    //      makeItemDraggable(tileElement,packery);
-    //  }
-
-    function makeItemDraggable(item,packery){
-        item.draggable = true;
-        let draggie = new Draggabilly(item);
-        packery.bindDraggabillyEvents(draggie);
+    const packeryOptions = {
+        percentPosition: true,
+        itemSelector:'.packery-grid-item',
+        columnWidth:'.grid-sizer',
+        rowWidth:'.grid-sizer',
+        gutter:'.gutter-sizer'
     }
 
-    function updatePackery(){
-        if(packery !== undefined){
-            packery.reloadItems();
-            packery.layout();
-        }
-    }
-
-    const _tiles = props.tiles ? props.tiles.map(t => <Tile deleteTile={props.onTileHide} onSizeChanged={updatePackery} tile={t}/>) :[];
-    
     return (
-
-        <div  className='container-fluid'>
-             <div  className='packery-grid'>
+        <div className='container-fluid'>
+            <GridView   className='packery-grid' options={packeryOptions}>
                 <div className = 'grid-sizer'></div>
                 <div className = 'gutter-sizer'></div>
                 {_tiles}
-            </div>
-           
+            </GridView>
         </div>
-        
     );
-
 }
-TilesGrid = forwardRef(TilesGrid);
+
 export default TilesGrid;
 

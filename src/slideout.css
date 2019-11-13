@@ -17,5 +17,20 @@
 .show-button:hover{
     cursor: pointer;
     background-color: lightgrey;
-    padding:3px;
+    padding:5px;
+    margin: 5px;
+}
+
+.tile-form{
+    padding: 3px;
+}
+.form-control{
+    display:flex;
+    justify-content: space-between;
+    margin:5px;
+}
+
+.btn.right{
+    float:left;
+    margin-left:4px;
 }

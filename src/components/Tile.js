@@ -24,15 +24,19 @@ function Tile(props){
         props.deleteTile(props.tile.id);
     }
 
+    function onEditTile(){
+        props.editTile(props.tile.id);
+    }
+
     let tileClass = `packery-grid-item width-${width} height-${height}`;
     console.log(tileClass);
 
     return (
-        <div className={tileClass} key = {props.tile.id}>
+        <div id={props.tile.id} className={tileClass} key = {props.tile.id}>
              <div  className="card ec-card" >
                 <div className = "card-header">
                     {props.tile.title}
-                    <DropDownMenu onTileDeleted={onTileDeleted} onWidthChanged={onWidthChanged} onHeightChanged={onHeightChanged}/>
+                    <DropDownMenu onEditTile = {onEditTile} onTileDeleted={onTileDeleted} onWidthChanged={onWidthChanged} onHeightChanged={onHeightChanged}/>
                 </div>
                 <div className="card-body">
                     {props.tile.description}

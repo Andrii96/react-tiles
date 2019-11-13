@@ -38,8 +38,7 @@ class GridView extends Component{
     }
 
     getDifferences(){
-        //debugger;
-
+       
         let oldNodes = this.domChildren.filter(node=>node.parentNode !== null);
 
         let currentChildNodes = this.getChildren();
@@ -68,6 +67,9 @@ class GridView extends Component{
             differences.addedNodes.forEach(node=>this.makeNodeDraggable(node));
             this.packery.appended(differences.addedNodes);
             this.packery.reloadItems();
+            if(this.props.onChildAdded){
+                this.props.onChildAdded();
+            }
         }
         this.packery.layout();
     }
@@ -75,7 +77,6 @@ class GridView extends Component{
     
 
     componentDidMount(){
-        //debugger;
         this.initializePackery();
         this.makeChildNodesDraggable()
     }
@@ -84,13 +85,7 @@ class GridView extends Component{
         this.updateLayout();
     }
 
-    componentWillReceiveProps() {
-        this._timer = setTimeout(function() {
-            this.packery.reloadItems();
-            this.isMounted && this.isMounted() && this.forceUpdate();
-        }.bind(this), 0);
-    }
-
+    
     render(){
         return  React.createElement(this.props.elementType,{
             className:this.props.className,
