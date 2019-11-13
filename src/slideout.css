@@ -1,0 +1,21 @@
+.slide-out{
+    height:auto;
+    width:450px;
+}
+
+.hidden-tile{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.hidden-tile-title{
+    display:flex;
+    justify-content: space-between;
+}
+
+.show-button:hover{
+    cursor: pointer;
+    background-color: lightgrey;
+    padding:3px;
+}
