@@ -1,12 +1,15 @@
 .slide-out{
-    height:auto;
+    height:100%;
     width:450px;
+    background-color: rgb(243, 240, 208);
 }
 
 .hidden-tile{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
+    margin-left: 15px;
+    margin-right: 15px;
 }
 
 .hidden-tile-title{
@@ -17,8 +20,6 @@
 .show-button:hover{
     cursor: pointer;
     background-color: lightgrey;
-    padding:5px;
-    margin: 5px;
 }
 
 .tile-form{
@@ -33,4 +34,16 @@
 .btn.right{
     float:left;
     margin-left:4px;
+}
+.slideout-header{
+    display: flex;
+    flex-direction: column;
+}
+
+.slideout-close-button{
+    margin:10px;
+}
+.slideout-close-button:hover{
+    cursor: pointer;
+    color: gray;
 }

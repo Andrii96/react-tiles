@@ -1,7 +1,10 @@
 import React, {useEffect,useState} from 'react';
 import TilesGrid from './components/TilesGrid';
 import SlideOut from './components/SlideOut';
+import {saveTile as saveTileToDb, getApps}  from './api/api';
+import {ToastContainer, toast} from 'react-toastify';
 import './styles.css';
+import 'react-toastify/dist/ReactToastify.css';
 function ClientPage (props){
     
     const[visibleTiles, setVisibleTiles] = useState([...props.apps]);
@@ -10,17 +13,7 @@ function ClientPage (props){
     const[isSideOutForEdit, setSideOutForEdit]=useState(false);
     const[tileToEdit,setTileToEdit]=useState();
     function handleHiddenTilesClick(e){
-            setSideOutOpen(!isSideOutOpen);
-    }
-
-    function onAddTileClickHandler(){
-        
-        const element = {
-            id:visibleTiles.length + hiddenTiles.length+1,
-            title:'Test title',
-            description:'test description'
-        };
-        setVisibleTiles([...visibleTiles,element]);
+            setSideOutOpen(true);
     }
 
     function onTileHide(id){
@@ -42,26 +35,37 @@ function ClientPage (props){
     function editTile(id){
         setSideOutOpen(true);
         setSideOutForEdit(true);
-        setTileToEdit(visibleTiles.find(t=>t.id===id)) ;
-        
+        setTileToEdit(visibleTiles.find(t=>t.id===id));
     }
 
-    function sideOutClose(){
+    function slideOutClose(){
         setSideOutOpen(false);
         setSideOutForEdit(false);
-       
     }
-   
+
+    function saveTile(tile){
+        saveTileToDb(tile)
+        .then(response=>{
+            getApps().then(apps=>{
+                slideOutClose();
+                toast(`Application was successfully ${isSideOutForEdit?"edited":"added"} `, {type:"success"});
+                setVisibleTiles(apps);
+                setTileToEdit({});
+            });
+        })
+    }
 
     return(
-        <>
+        <div className="client-page">
             <button onClick={handleHiddenTilesClick}> Hidden tiles</button>
             <div className="content-container" >
                 <TilesGrid editTile = {editTile} onTileHide={onTileHide} tiles = {visibleTiles}/>
-                <SlideOut tile={tileToEdit} isSideOutForEdit={isSideOutForEdit} removeFromHidden={onRemovedFromHidden} hiddenTiles={hiddenTiles} isOpen={isSideOutOpen}></SlideOut>
+                <SlideOut saveTile={saveTile} onCloseSlideOut={slideOutClose} tile={tileToEdit} isSideOutForEdit={isSideOutForEdit} removeFromHidden={onRemovedFromHidden} hiddenTiles={hiddenTiles} isOpen={isSideOutOpen}></SlideOut>
+                <ToastContainer  />
             </div>
-            <button onClick={onAddTileClickHandler}>Add tile</button>
-        </>  
+           
+           
+        </div>  
     );
 }
 

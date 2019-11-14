@@ -2,7 +2,7 @@ import React,{useState,useEffect, Component} from 'react';
 import '.././styles.css';
 import {faCaretRight} from '@fortawesome/free-solid-svg-icons';
 import {faEllipsisV} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import { Dropdown, DropdownMenu, DropdownToggle, DropdownItem } from 'reactstrap';
 
 class CustomBtnToggle extends Component{

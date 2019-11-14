@@ -48,8 +48,13 @@
 
 /*Packery grid styles*/
 .packery-grid{
-    background-color: gray;
+    
     display: block;
+}
+
+.container-fluid{
+    height:100%;
+    background-color: ivory;
 }
 
  .packery-grid-item.width-1{
@@ -76,10 +81,14 @@
     height:690px;
 } 
 
+.client-page{
+    height:100vh;
+}
+
 .content-container{
+    height:100%;
     display:flex;
     justify-content: space-between;
-    background-color: ivory;
 }
 
 

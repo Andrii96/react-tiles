@@ -11,14 +11,12 @@ class App extends Component {
         apps:[]
       };
       getApps().then(_apps=>this.setState({apps:_apps}));
-      //debugger;
     }
     
 
 
   render(){
     
-    //debugger;
     return (
       this.state.apps.length > 0 ? 
       (
